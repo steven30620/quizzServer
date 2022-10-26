@@ -4,7 +4,7 @@ const userControllers = require('../controllers/userControllers');
 const auth = require('../middleware/auth');
 
 router.post('/userScore', userControllers.userScore);
-router.post('/login', userControllers.userLogin);
+router.get('/getScore', userControllers.getScore);
 router.delete('/:id', auth, userControllers.deleteUser);
 
 module.exports = router;

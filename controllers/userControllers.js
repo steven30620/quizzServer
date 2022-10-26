@@ -4,10 +4,9 @@ const jwt = require('jsonwebtoken');
 const auth = require('../middleware/auth');
 
 exports.userScore = (req, res, next) => {
-	console.log('je pass ici');
 	const newUser = new userSchema({
 		name: req.body.name,
-		score: req.body.email,
+		score: req.body.score,
 		try: req.body.try,
 	});
 	newUser
@@ -20,39 +19,13 @@ exports.userScore = (req, res, next) => {
 		.catch((error) => res.status(401).json(`messages : ${error}`));
 };
 
-exports.userLogin = (req, res, next) => {
-	const userEmail = req.body.email;
-	const userPassword = req.body.password;
-
+exports.getScore = (req, res, next) => {
 	userSchema
-		.findOne({ email: userEmail })
-		.then((userFound) => {
-			if (!userFound) {
-				return res
-					.status(400)
-					.json({ message: 'Paire login/mot de passe incorrecte' });
-			}
-			bcrypt
-				.compare(userPassword, userFound.password)
-				.then((isValid) => {
-					if (!isValid) {
-						return res.status(401).json({
-							message: 'mot de passe incorrecte',
-						});
-					}
-					res.status(200).json({
-						message: 'vous êtes connecté',
-						info_Utilisateur: userFound,
-						token: jwt.sign(
-							{ userId: userFound._id },
-							'RANDOM_TOKEN_SECRET',
-							{ expiresIn: '24h' }
-						),
-					});
-				})
-				.catch((error) => res.status(500).json({ error }));
+		.find()
+		.then((score) => {
+			res.status(200).json(score);
 		})
-		.catch((error) => res.status(500).json(error));
+		.catch((error) => res.status(500).json({ error }));
 };
 
 exports.deleteUser = (req, res, next) => {
