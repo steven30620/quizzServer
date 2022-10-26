@@ -2,13 +2,13 @@ const bookSchema = require('../models/book');
 const Book = require('../models/book');
 const fs = require('fs');
 
-exports.test = (req, res, next) => {
-	res.status(200).json({ message: 'LE serveur marche' });
-};
 exports.getAllBooks = (req, res, next) => {
 	Book.find()
 		.then((books) => res.status(201).json(books))
 		.catch((error) => res.status(400).json(error));
+};
+exports.test = (req, res, next) => {
+	res.status(201).json({ message: 'serveur on' });
 };
 
 exports.addBook = (req, res, next) => {

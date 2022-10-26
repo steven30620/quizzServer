@@ -4,8 +4,8 @@ const bookControllers = require('../controllers/bookControllers');
 const auth = require('../middleware/auth');
 const multer = require('../middleware/multer');
 
-router.get('/test', bookControllers.test);
 router.get('/', bookControllers.getAllBooks);
+router.get('/test', bookControllers.test);
 router.post('/', auth, multer, bookControllers.addBook);
 router.put('/:id', auth, bookControllers.modifyBook);
 router.get('/:id', bookControllers.getOneBook);

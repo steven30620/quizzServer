@@ -19,6 +19,8 @@ app.use((req, res, next) => {
 	next();
 });
 
+app.listen(process.env.PORT || 3000);
+
 mongoose
 	.connect(
 		'mongodb+srv://steven:testtest@clustertest.4yuc7.mongodb.net/clusterTest'
@@ -27,7 +29,7 @@ mongoose
 	.catch(() => console.log('Connexion à MongoDB échouée !'));
 
 app.use('/images', express.static(path.join(__dirname, 'images')));
-app.use('/api/book', bookRoutes);
-app.use('/api/user', userRoutes);
+app.use('/book', bookRoutes);
+app.use('/user', userRoutes);
 
 module.exports = app;
