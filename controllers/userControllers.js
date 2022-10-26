@@ -3,28 +3,21 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const auth = require('../middleware/auth');
 
-exports.createUser = (req, res, next) => {
-	bcrypt
-		.hash(req.body.password, 10)
-		.then((hash) => {
-			const newUser = new userSchema({
-				name: req.body.name,
-				email: req.body.email,
-				password: hash,
-				premium: req.body.premium,
+exports.userScore = (req, res, next) => {
+	console.log('je pass ici');
+	const newUser = new userSchema({
+		name: req.body.name,
+		score: req.body.email,
+		try: req.body.try,
+	});
+	newUser
+		.save()
+		.then((infoUser) => {
+			res.status(201).json({
+				message: `Bienvenue ${infoUser.name}`,
 			});
-			newUser
-				.save()
-				.then((infoUser) => {
-					res.status(201).json({
-						message: `Bienvenue ${infoUser.name}`,
-						ancienPass: req.body.password,
-						passwordHash: hash,
-					});
-				})
-				.catch((error) => res.status(401).json(`messages : ${error}`));
 		})
-		.catch(() => res.status(401).json({ message: 'champs incomplet' }));
+		.catch((error) => res.status(401).json(`messages : ${error}`));
 };
 
 exports.userLogin = (req, res, next) => {
