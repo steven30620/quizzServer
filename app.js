@@ -6,6 +6,8 @@ const path = require('path');
 const bookRoutes = require('./routes/bookRoutes');
 const userRoutes = require('./routes/userRoutes');
 
+app.listen(process.env.PORT || 3000);
+
 app.use((req, res, next) => {
 	res.setHeader('Access-Control-Allow-Origin', '*');
 	res.setHeader(
@@ -18,8 +20,6 @@ app.use((req, res, next) => {
 	);
 	next();
 });
-
-app.listen(process.env.PORT || 3000);
 
 mongoose
 	.connect(
